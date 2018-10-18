@@ -1,3 +1,5 @@
+# Created by Connor Ford 2018
+
 import requests
 from bs4 import BeautifulSoup
 from twilio.rest import Client
