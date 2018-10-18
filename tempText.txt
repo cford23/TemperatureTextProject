@@ -1,0 +1,31 @@
+import requests
+from datetime import datetime
+from bs4 import BeautifulSoup
+from twilio.rest import Client
+
+# Sets up messaging
+account_sid = "(your account number here)"
+auth_token = "(your token here)"
+client = Client(account_sid, auth_token)
+
+# Gets the HTML from the url
+page = requests.get("https://weather.com/weather/today/l/57042:4:US")
+soup = BeautifulSoup(page.content, 'html.parser')
+
+# Finds where the current temperature is
+p = str(soup.find_all('div', class_="today_nowcard-temp"))
+
+# Removes the HTML garbage around the temperature
+bad1 = '[<div class="today_nowcard-temp"><span class="">'
+bad2 = '<sup>°</sup></span></div>]'
+p = p.strip(bad1)
+p = p.strip(bad2)
+
+print("Temperature: " + p + "°F")
+
+# Sends the text to my phone
+message = client.api.messages.create(
+	to = "+1(your phone number here)",
+	from_ = "+1(your Twilion phone number)",
+	body = "Madison: " + p + "°F")
+		
