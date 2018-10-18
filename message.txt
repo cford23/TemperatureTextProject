@@ -1,0 +1,13 @@
+from twilio.rest import Client
+
+# Your Account SID from twilio.com/console
+account_sid = "(your account number)" 
+# Your Auth Token from twilio.com/console
+auth_token = "(your authentication token)"
+
+client = Client(account_sid, auth_token)
+
+message = client.api.messages.create(
+	to = "+1(Your phone number)",
+	from_ = "+1(Your Twilio phone number)",
+	body = "Hello from the Raspberry Pi!")
